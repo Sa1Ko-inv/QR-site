@@ -1,0 +1,142 @@
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  padding: 1rem;
+}
+
+.authForm {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.5rem;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+
+  &:focus {
+    outline: none;
+    border-color: #4a90e2;
+  }
+}
+
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #357abd;
+  }
+}
+
+p {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+
+  a {
+    color: #4a90e2;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Мобильные устройства (портретная ориентация)
+@media (max-width: 480px) {
+  .authForm {
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .input, .button {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  p {
+    font-size: 0.8rem;
+  }
+}
+
+// Мобильные устройства (ландшафтная ориентация)
+@media (min-width: 481px) and (max-width: 767px) {
+  .authForm {
+    padding: 1.75rem;
+    max-width: 450px;
+  }
+}
+
+// Планшеты (портретная ориентация)
+@media (min-width: 768px) and (max-width: 991px) {
+  .authForm {
+    padding: 2rem;
+    max-width: 500px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .input, .button {
+    padding: 0.8rem;
+    font-size: 1.1rem;
+  }
+}
+
+// Планшеты (ландшафтная ориентация) и небольшие десктопы
+@media (min-width: 992px) and (max-width: 1199px) {
+  .authForm {
+    max-width: 550px;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+}
+
+// Большие десктопы
+@media (min-width: 1200px) {
+  .authForm {
+    max-width: 600px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .input, .button {
+    padding: 0.9rem;
+    font-size: 1.1rem;
+  }
+}
+

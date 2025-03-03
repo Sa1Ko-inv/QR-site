@@ -15,7 +15,7 @@ function buildPlagins({ mode, paths, analyzer, platform }) {
         new HtmlWebpackPlugin({
             template: paths.html,
             inject: 'body',
-            favicon: path.resolve(paths.public, 'skeleton.ico')
+            favicon: path.resolve(paths.public, 'QR-icons.png')
         }),
         new DefinePlugin({
             __PLATFORM__: JSON.stringify(platform),

@@ -1,12 +1,17 @@
 import React from 'react';
 import * as style from './App.module.scss'
+import {BrowserRouter} from "react-router-dom";
+import AppRouter from "@/components/AppRouter";
+import NavBar from "@/components/NavBar/NavBar";
 
 const App = () => {
     return (
-        <div>
-            <button className={style.button}>QWE</button>
-        </div>
+        <BrowserRouter>
+            <NavBar />
+            <AppRouter />
+        </BrowserRouter>
     )
 }
 
 export default App;
+
