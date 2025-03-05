@@ -1,49 +1,54 @@
 "use client"
 
-import { useState, useContext } from "react"
+import {useState, useContext, useEffect} from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import { Context } from "@/index"
 import { LOGIN_ROUTE, HOME_ROUTE } from "@/utils/consts"
 import * as styles from "./Register.module.scss"
+import {registration} from "@/http/userAPI";
+import {fetchGroups} from "@/http/groupAPI";
 
 const Register = observer(() => {
     const { user } = useContext(Context)
-    const navigate = useNavigate()
-
+    // const navigate = useNavigate()
+    //
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
-    const [role, setRole] = useState("student")
-    const [group, setGroup] = useState("")
+    const [role, setRole] = useState("STUDENT")
+    const [selectedGroup, setSelectedGroup] = useState("")  // Храним id выбранной группы
+    const [groups, setGroups] = useState([]); // Храним список всех групп
 
-    const groups = [
-        { id: "1", name: "Группа 101" },
-        { id: "2", name: "Группа 102" },
-        { id: "3", name: "Группа 201" },
-        { id: "4", name: "Группа 202" },
-    ]
+    // Вывод списка групп в список при регистрации
+    useEffect(() => {
+        const getGroups = async () => {
+            try {
+                const data = await fetchGroups();
+                setGroups(data); // Устанавливаем массив групп в отдельное состояние
+            } catch (error) {
+                console.error("Ошибка при получении групп:", error);
+                setGroups([]);
+            }
+        };
+        getGroups();
+    }, []);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    // Регистрация
+    const signIn = async (e) => {
+        e.preventDefault();
         try {
-            // Здесь должна быть логика регистрации
-            const data = { fullName, email, password, role, group: role === "student" ? group : null }
-            console.log("Регистрация:", data)
+        const response = await registration(email, password, fullName, role, selectedGroup)
+        console.log(response)
 
-            // Имитация успешной регистрации
-            user.setIsAuth(true)
-            user.setUser(data)
-            user.setRole(role)
-            navigate(HOME_ROUTE)
-        } catch (e) {
-            alert(e.response.data.message)
+        } catch (error) {
+            console.error("Ошибка при регистрации:", error)
         }
     }
 
     return (
         <div className={styles.registerContainer}>
-            <form className={styles.registerForm} onSubmit={handleSubmit}>
+            <form className={styles.registerForm}>
                 <h2>Регистрация</h2>
 
                 <input
@@ -77,8 +82,8 @@ const Register = observer(() => {
                     <label>
                         <input
                             type="radio"
-                            value="student"
-                            checked={role === "student"}
+                            value="STUDENT"
+                            checked={role === "STUDENT"}
                             onChange={(e) => setRole(e.target.value)}
                         />
                         Студент
@@ -86,16 +91,21 @@ const Register = observer(() => {
                     <label>
                         <input
                             type="radio"
-                            value="teacher"
-                            checked={role === "teacher"}
+                            value="TEACHER"
+                            checked={role === "TEACHER"}
                             onChange={(e) => setRole(e.target.value)}
                         />
                         Преподаватель
                     </label>
                 </div>
 
-                {role === "student" && (
-                    <select className={styles.select} value={group} onChange={(e) => setGroup(e.target.value)} required>
+                {role === "STUDENT" && groups.length > 0 && (
+                    <select
+                        className={styles.select}
+                        value={selectedGroup} // Тут храним id выбранной группы
+                        onChange={(e) => setSelectedGroup(e.target.value)}
+                        required
+                    >
                         <option value="">Выберите группу</option>
                         {groups.map((group) => (
                             <option key={group.id} value={group.id}>
@@ -105,7 +115,11 @@ const Register = observer(() => {
                     </select>
                 )}
 
-                <button className={styles.button} type="submit">
+
+                <button
+                    className={styles.button}
+                    onClick={signIn}
+                >
                     Зарегистрироваться
                 </button>
 

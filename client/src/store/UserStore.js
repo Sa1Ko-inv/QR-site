@@ -2,7 +2,7 @@
 import { makeAutoObservable } from "mobx";
 
 class UserStore {
-    _isAuth = false;
+    _isAuth = true;
     _user = null;
     _role = null;
 

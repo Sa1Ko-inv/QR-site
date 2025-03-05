@@ -37,7 +37,7 @@ const NavBar = () => {
                                         Группы
                                     </Button>
                                 </Nav.Link>
-                                <Nav.Link href={LOGIN_ROUTE} className="mb-2 mb-lg-0">
+                                <Nav.Link href='#' className="mb-2 mb-lg-0">
                                     <Button variant="primary" className="w-100">
                                         Пользователи
                                     </Button>

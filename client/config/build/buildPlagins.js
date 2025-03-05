@@ -1,13 +1,14 @@
-const { DefinePlugin } = require("webpack");
+const {DefinePlugin} = require("webpack");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
-function buildPlagins({ mode, paths, analyzer, platform }) {
+function buildPlagins({mode, paths, analyzer, platform}) {
     const isDev = mode === "development";
     const isProd = mode === "production";
 
@@ -17,9 +18,13 @@ function buildPlagins({ mode, paths, analyzer, platform }) {
             inject: 'body',
             favicon: path.resolve(paths.public, 'QR-icons.png')
         }),
+
+        new Dotenv(),
+
         new DefinePlugin({
             __PLATFORM__: JSON.stringify(platform),
             __ENV__: JSON.stringify(mode),
+            // 'process.env': JSON.stringify(process.env),
         }),
     ]
 
@@ -35,15 +40,15 @@ function buildPlagins({ mode, paths, analyzer, platform }) {
         }))
         plugins.push(new CopyPlugin({
             patterns: [
-                { from: path.resolve(paths.public, 'locales'), to: path.resolve(paths.output, 'locales'), },
+                {from: path.resolve(paths.public, 'locales'), to: path.resolve(paths.output, 'locales'),},
             ],
         }))
     }
 
-    if(analyzer) {
+    if (analyzer) {
         plugins.push(new BundleAnalyzerPlugin())
     }
     return plugins;
 }
 
-module.exports = { buildPlagins };
+module.exports = {buildPlagins};
