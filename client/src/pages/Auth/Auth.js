@@ -9,10 +9,14 @@ import {login} from "@/http/userAPI";
 const Auth = observer(() => {
     const { user } = useContext(Context)
     const navigate = useNavigate();
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("");
 
     // Авторизация
     const signIn = async (e) => {
         e.preventDefault();
+        setError(""); // Очистка ошибки перед новой попыткой
         let data;
         try {
             data = await login(email, password)
@@ -22,19 +26,21 @@ const Auth = observer(() => {
             user.setRole(data.role)
             navigate(HOME_ROUTE);
         } catch (e) {
-            alert(e.response.data.message)
+            const errorMessage = e.response?.data?.message || "Ошибка авторизации";
+            setError(errorMessage);
         }
 
     }
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+
 
 
     return (
         <div className={styles.authContainer}>
             <form className={styles.authForm}>
                 <h2>Авторизация</h2>
+
+                {error && <div className={styles.error}>{error}</div>}  {/* Вывод ошибки */}
 
                 <input
                     className={styles.input}
@@ -60,6 +66,8 @@ const Auth = observer(() => {
                 >
                     Войти
                 </button>
+
+
 
                 <p>
                     Нет аккаунта? <Link to={REGISTRATION_ROUTE}>Зарегистрируйтесь</Link>

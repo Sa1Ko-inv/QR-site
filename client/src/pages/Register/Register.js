@@ -19,6 +19,8 @@ const Register = observer(() => {
     const [selectedGroup, setSelectedGroup] = useState("")  // Храним id выбранной группы
     const [groups, setGroups] = useState([]); // Храним список всех групп
     const [showSuccessModal, setShowSuccessModal] = useState(false) // Состояние для отображения модального окна
+    const [error, setError] = useState(""); //вывод ошибки
+
 
     // Вывод списка групп в список при регистрации
     useEffect(() => {
@@ -47,7 +49,8 @@ const Register = observer(() => {
                 navigate(LOGIN_ROUTE)
             }, 5000)
         } catch (e) {
-            alert(e.response.data.message)
+            const errorMessage = e.response?.data?.message || "Ошибка авторизации";
+            setError(errorMessage);
         }
     }
 
@@ -82,7 +85,9 @@ const Register = observer(() => {
                     </div>
                 </div>
             )}
+
             <form className={styles.registerForm}>
+                {error && <div className={styles.error}>{error}</div>}  {/* Вывод ошибки */}
                 <h2>Регистрация</h2>
 
                 <input
