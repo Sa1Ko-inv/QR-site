@@ -3,7 +3,8 @@ import React from 'react';
 const Groups = () => {
     return (
         <div>
-            <h1>All Groups</h1>
+            <h1>Все группы</h1>
+            {/* Добавьте логику для отображения групп */}
         </div>
     );
 };

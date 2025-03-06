@@ -11,8 +11,6 @@ import {fetchGroups} from "@/http/groupAPI";
 
 const Register = observer(() => {
     const { user } = useContext(Context)
-    // const navigate = useNavigate()
-    //
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
@@ -35,14 +33,13 @@ const Register = observer(() => {
     }, []);
 
     // Регистрация
-    const signIn = async (e) => {
+    const signUn = async (e) => {
         e.preventDefault();
+        let data;
         try {
-        const response = await registration(email, password, fullName, role, selectedGroup)
-        console.log(response)
-
-        } catch (error) {
-            console.error("Ошибка при регистрации:", error)
+        data = await registration(email, password, fullName, role, selectedGroup || null)
+        } catch (e) {
+            alert(e.response.data.message)
         }
     }
 
@@ -118,7 +115,7 @@ const Register = observer(() => {
 
                 <button
                     className={styles.button}
-                    onClick={signIn}
+                    onClick={signUn}
                 >
                     Зарегистрироваться
                 </button>

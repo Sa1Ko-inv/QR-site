@@ -2,8 +2,8 @@
 import { makeAutoObservable } from "mobx";
 
 class UserStore {
-    _isAuth = true;
-    _user = null;
+    _isAuth = false;
+    _user = {};
     _role = null;
 
     constructor() {
@@ -35,11 +35,11 @@ class UserStore {
     }
 
     isTeacher() {
-        return this._role === "teacher";
+        return this._role === "TEACHER";
     }
 
     isStudent() {
-        return this._role === "student";
+        return this._role === "STUDENT";
     }
 
     logout() {

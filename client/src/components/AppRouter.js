@@ -1,36 +1,45 @@
 import React, { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { studentRoutes, teacherRoutes } from "@/routes";
-import { HOME_ROUTE, LOGIN_ROUTE } from "@/utils/consts";
+import { GROUPS_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from "@/utils/consts";
 import { Context } from "@/index";
-import Auth from "@/pages/Auth/Auth"; // Добавляем импорт
+import Auth from "@/pages/Auth/Auth";
+import Groups from "@/pages/Groups/Groups";
+import Home from "@/pages/Home/Home";
 
 const AppRouter = () => {
-    const { user } = useContext(Context); // Получаем userStore из контекста
-    console.log(user);
+    const { user } = useContext(Context);
+    console.log("Auth:", user.isAuth, "Role", user.role);
 
-    // Раскомментировать после создания страницы создания регистрации и авторизации
+    if (user.isAuth && user.role === null) {
+        return <div>Загрузка...</div>; // Здесь можно вставить спиннер
+    }
     return (
         <Routes>
+            {/* Главная страница только для авторизованных пользователей */}
+            {user.isAuth && <Route path={HOME_ROUTE} element={<Home />} />}
 
-            {/*user.isAuth && */ user.isTeacher() &&
+            {/* Если авторизован, загружаем маршруты по роли */}
+            {user.isAuth && user.isTeacher() &&
                 teacherRoutes.map(({ path, element }) => (
                     <Route key={path} path={path} element={element} exact />
                 ))
             }
 
-            {/*user.isAuth &&  user.isStudent() &&*/
+            {user.isAuth && user.isStudent() &&
                 studentRoutes.map(({ path, element }) => (
                     <Route key={path} path={path} element={element} exact />
                 ))
             }
 
-            {/* Если пользователь не авторизован, отправляем его на страницу входа */}
-            {/*{!user.isAuth && <Route path="*" element={<Navigate to={LOGIN_ROUTE} replace />} />}*/}
-            {/*{!user.isAuth && <Route path={LOGIN_ROUTE} element={<Auth />} />}*/}
+            {/* Страница авторизации для неавторизованных пользователей */}
+            {!user.isAuth && <Route path={LOGIN_ROUTE} element={<Auth />} />}
 
-            {/* Если авторизован, но маршрут не найден — отправляем на главную */}
-            <Route path="*" element={<Navigate to={HOME_ROUTE} replace />} />
+            {/* Перенаправление в зависимости от авторизации */}
+            <Route
+                path="*"
+                element={user.isAuth ? <Navigate to={HOME_ROUTE} replace /> : <Navigate to={LOGIN_ROUTE} replace />}
+            />
         </Routes>
     );
 };

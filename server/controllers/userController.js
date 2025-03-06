@@ -43,7 +43,12 @@ class UserController {
 
     async check(req, res, next) {
         const token = generateJWT(req.user.id, req.user.email, req.user.role)
-        return res.json({token})
+        return res.json({
+            token,
+            id: req.user.id,
+            email: req.user.email,
+            role: req.user.role,
+        })
     }
 
     // Удаление пользователя по ID
