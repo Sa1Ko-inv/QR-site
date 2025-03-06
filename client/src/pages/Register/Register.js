@@ -11,12 +11,14 @@ import {fetchGroups} from "@/http/groupAPI";
 
 const Register = observer(() => {
     const { user } = useContext(Context)
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
     const [role, setRole] = useState("STUDENT")
     const [selectedGroup, setSelectedGroup] = useState("")  // Храним id выбранной группы
     const [groups, setGroups] = useState([]); // Храним список всех групп
+    const [showSuccessModal, setShowSuccessModal] = useState(false) // Состояние для отображения модального окна
 
     // Вывод списка групп в список при регистрации
     useEffect(() => {
@@ -34,10 +36,16 @@ const Register = observer(() => {
 
     // Регистрация
     const signUn = async (e) => {
-        e.preventDefault();
-        let data;
+        e.preventDefault()
+        let data
         try {
-        data = await registration(email, password, fullName, role, selectedGroup || null)
+            data = await registration(email, password, fullName, role, selectedGroup || null)
+            setShowSuccessModal(true) // Показываем модальное окно при успешной регистрации
+
+            // Перенаправляем на страницу авторизации через 3 секунды
+            setTimeout(() => {
+                navigate(LOGIN_ROUTE)
+            }, 5000)
         } catch (e) {
             alert(e.response.data.message)
         }
@@ -45,6 +53,35 @@ const Register = observer(() => {
 
     return (
         <div className={styles.registerContainer}>
+            {/* Модальное окно успешной регистрации */}
+            {showSuccessModal && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.successModal}>
+                        <div className={styles.successIcon}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="64"
+                                height="64"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Регистрация успешна!</h3>
+                        <p>Ваша учетная запись была успешно создана.</p>
+                        <p>Вы будете перенаправлены на страницу входа через несколько секунд...</p>
+                        <button className={styles.modalButton} onClick={() => navigate(LOGIN_ROUTE)}>
+                            Перейти сейчас
+                        </button>
+                    </div>
+                </div>
+            )}
             <form className={styles.registerForm}>
                 <h2>Регистрация</h2>
 

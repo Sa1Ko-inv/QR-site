@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { studentRoutes, teacherRoutes } from "@/routes";
-import { GROUPS_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from "@/utils/consts";
+import {GROUPS_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "@/utils/consts";
 import { Context } from "@/index";
 import Auth from "@/pages/Auth/Auth";
 import Groups from "@/pages/Groups/Groups";
 import Home from "@/pages/Home/Home";
+import Register from "@/pages/Register/Register";
 
 const AppRouter = () => {
     const { user } = useContext(Context);
@@ -34,6 +35,7 @@ const AppRouter = () => {
 
             {/* Страница авторизации для неавторизованных пользователей */}
             {!user.isAuth && <Route path={LOGIN_ROUTE} element={<Auth />} />}
+            {!user.isAuth && <Route path={REGISTRATION_ROUTE} element={<Register />} />}
 
             {/* Перенаправление в зависимости от авторизации */}
             <Route
