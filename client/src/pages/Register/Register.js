@@ -47,7 +47,7 @@ const Register = observer(() => {
             // Перенаправляем на страницу авторизации через 3 секунды
             setTimeout(() => {
                 navigate(LOGIN_ROUTE)
-            }, 5000)
+            }, 3500)
         } catch (e) {
             const errorMessage = e.response?.data?.message || "Ошибка авторизации";
             setError(errorMessage);

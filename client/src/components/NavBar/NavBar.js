@@ -62,7 +62,7 @@ const NavBar = () => {
                                         // onClick={() => navigate('/groups')}
                                         className="w-100"
                                     >
-                                        Пользователи
+                                        Лекции
                                     </Button>
                                 </Nav.Link>
                             </Nav>
