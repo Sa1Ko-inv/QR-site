@@ -10,4 +10,8 @@ router.get('/:id', lessonController.getById);
 router.put('/:id', checkRole('TEACHER'), lessonController.update);
 router.delete('/:id', checkRole('TEACHER'), lessonController.delete);
 
+router.post('/attendance/activate', checkRole('TEACHER'), lessonController.activateAttendance);
+router.post('/attendance/deactivate', checkRole('TEACHER'), lessonController.deactivateAttendance);
+
+
 module.exports = router;

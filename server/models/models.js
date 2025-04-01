@@ -23,12 +23,23 @@ const Lesson = sequelize.define('lesson', {
     date: {type: DataTypes.DATE, allowNull: false}, // Дата проведения
     startTime: {type: DataTypes.TIME, allowNull: false}, // Время начала
     endTime: {type: DataTypes.TIME, allowNull: false}, // Время окончания
-    teacherId: {type: DataTypes.INTEGER, allowNull: false} // ID преподавателя
+    teacherId: {type: DataTypes.INTEGER, allowNull: false}, // ID преподавателя
+    attendanceCode: {type: DataTypes.STRING, allowNull: true}, // Уникальный код для отметки посещаемости
+    attendanceActive: {type: DataTypes.BOOLEAN, defaultValue: false} // Флаг активности отметки посещаемости
 });
 
 // Промежуточная таблица для связи многие-ко-многим между занятиями и группами
 const LessonGroup = sequelize.define('lesson_group', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true}
+});
+
+// Модель для отслеживания посещаемости
+const Attendance = sequelize.define('attendance', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    present: {type: DataTypes.BOOLEAN, defaultValue: true}, // Присутствовал ли студент
+    markedAt: {type: DataTypes.DATE, defaultValue: DataTypes.NOW}, // Время отметки
+    ipAddress: {type: DataTypes.STRING, allowNull: true}, // IP-адрес, с которого была сделана отметка
+    userAgent: {type: DataTypes.STRING, allowNull: true} // User-Agent браузера
 });
 
 // Связи между моделями
@@ -43,9 +54,17 @@ Group.belongsToMany(Lesson, { through: LessonGroup });
 User.hasMany(Lesson, { foreignKey: 'teacherId' });
 Lesson.belongsTo(User, { foreignKey: 'teacherId', as: 'teacher' });
 
+// Связи для посещаемости
+Lesson.hasMany(Attendance);
+Attendance.belongsTo(Lesson);
+
+User.hasMany(Attendance);
+Attendance.belongsTo(User);
+
 module.exports = {
     User,
     Group,
     Lesson,
-    LessonGroup
+    LessonGroup,
+    Attendance
 }

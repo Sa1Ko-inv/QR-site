@@ -240,6 +240,52 @@ class LessonController {
             return next(ApiError.internal(error.message));
         }
     }
+    // Активировать отметку посещаемости
+    async activateAttendance(req, res, next) {
+        try {
+            const { lessonId, attendanceCode } = req.body;
+
+            // Проверяем существование занятия
+            const lesson = await Lesson.findByPk(lessonId);
+            if (!lesson) {
+                return next(ApiError.badRequest('Занятие не найдено'));
+            }
+
+            // Обновляем данные
+            await lesson.update({
+                attendanceActive: true,
+                attendanceCode
+            });
+
+            return res.json({ message: 'Отметка посещаемости активирована' });
+        } catch (error) {
+            return next(ApiError.internal(error.message));
+        }
+    }
+
+// Деактивировать отметку посещаемости
+    async deactivateAttendance(req, res, next) {
+        try {
+            const { lessonId } = req.body;
+
+            // Проверяем существование занятия
+            const lesson = await Lesson.findByPk(lessonId);
+            if (!lesson) {
+                return next(ApiError.badRequest('Занятие не найдено'));
+            }
+
+            // Обновляем данные
+            await lesson.update({
+                attendanceActive: false,
+                attendanceCode: null
+            });
+
+            return res.json({ message: 'Отметка посещаемости деактивирована' });
+        } catch (error) {
+            return next(ApiError.internal(error.message));
+        }
+    }
+
 }
 
 module.exports = new LessonController();
