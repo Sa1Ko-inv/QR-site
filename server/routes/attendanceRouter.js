@@ -5,5 +5,6 @@ const authMiddleware = require('../middleware/authMiddleware');
 
 // Студент отмечает посещение
 router.post('/mark', authMiddleware, attendanceController.markAttendance);
+router.get('/lesson/:lessonId', attendanceController.getAttendanceForLesson);
 
 module.exports = router;

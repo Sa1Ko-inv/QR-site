@@ -38,8 +38,6 @@ class AttendanceController {
                 lessonId,
                 userId: studentId,
                 present: true,
-                ipAddress: req.ip,
-                userAgent: req.headers['user-agent']
             });
 
             // Таймер для автоматической деактивации через 5 минут (300000 мс)
@@ -57,6 +55,28 @@ class AttendanceController {
             return next(ApiError.internal(error.message));
         }
     }
+    async getAttendanceForLesson(req, res, next) {
+        try {
+            const { lessonId } = req.params;
+
+            // Проверяем, существует ли занятие
+            const lesson = await Lesson.findByPk(lessonId);
+            if (!lesson) {
+                return next(ApiError.badRequest('Занятие не найдено'));
+            }
+
+            // Получаем список отметившихся студентов
+            const attendanceList = await Attendance.findAll({
+                where: { lessonId },
+                include: [{ model: User, attributes: ['id', 'fio', 'email'] }] // Подгружаем данные студентов
+            });
+
+            return res.json(attendanceList);
+        } catch (error) {
+            return next(ApiError.internal(error.message));
+        }
+    }
+
 }
 
 module.exports = new AttendanceController();

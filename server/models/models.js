@@ -38,8 +38,6 @@ const Attendance = sequelize.define('attendance', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     present: {type: DataTypes.BOOLEAN, defaultValue: true}, // Присутствовал ли студент
     markedAt: {type: DataTypes.DATE, defaultValue: DataTypes.NOW}, // Время отметки
-    ipAddress: {type: DataTypes.STRING, allowNull: true}, // IP-адрес, с которого была сделана отметка
-    userAgent: {type: DataTypes.STRING, allowNull: true} // User-Agent браузера
 });
 
 // Связи между моделями
