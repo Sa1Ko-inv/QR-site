@@ -1,10 +1,19 @@
 import Home from '@/pages/Home/Home';
-import {GROUP_ROUTE, GROUPS_ROUTE, HOME_ROUTE, LESSON_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "@/utils/consts";
+import {
+    GROUP_ROUTE,
+    GROUPS_ROUTE,
+    HOME_ROUTE,
+    LESSON_ROUTE,
+    LESSONDETAILS_ROUTE,
+    LOGIN_ROUTE,
+    REGISTRATION_ROUTE
+} from "@/utils/consts";
 import Register from "@/pages/Register/Register";
 import Auth from "@/pages/Auth/Auth";
 import Groups from "@/pages/Groups/Groups";
 import GroupInfo from "@/pages/Groups/GroupsInfo/GroupInfo";
 import LessonsPage from "@/pages/Lesson/LessonsPage";
+import LessonDetailsPage from "@/pages/Lesson/LessonDetailsPage/LessonDetailsPage";
 
 export const studentRoutes = [
     {
@@ -55,5 +64,9 @@ export const teacherRoutes = [
     {
         path: LESSON_ROUTE,
         element: <LessonsPage />
-    }
+    },
+    {
+        path: LESSONDETAILS_ROUTE,
+        element: <LessonDetailsPage />
+    },
 ]; 

@@ -64,6 +64,6 @@ export const markAttendance = async (lessonId, attendanceCode) => {
 
 // Получение списка посещаемости для занятия
 export const getAttendanceByLesson = async (lessonId) => {
-    const {data} = await $authHost.get(`api/attendance/${lessonId}`);
+    const {data} = await $authHost.get(`api/attendance/lesson/${lessonId}`);
     return data;
 };

@@ -6,3 +6,4 @@ export const HOME_ROUTE = '/';
 export const GROUPS_ROUTE = '/groups';
 export const GROUP_ROUTE = '/group';
 export const LESSON_ROUTE = '/lesson';
+export const LESSONDETAILS_ROUTE = '/lesson/:id';

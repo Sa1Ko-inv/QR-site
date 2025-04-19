@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchLessons } from '@/http/lessonAPI';
+import { Link } from 'react-router-dom';
 import * as styles from './LessonPage.module.scss';
 
 const LessonsPage = () => {
@@ -47,6 +48,10 @@ const LessonsPage = () => {
                             <p className={styles.lessonGroups}>
                                 Группы: {lesson.groups?.map((group) => group.name).join(', ') || 'Не указаны'}
                             </p>
+                            {/* Link to the detailed lesson page */}
+                            <Link to={`/lesson/${lesson.id}`}>
+                                Подробнее
+                            </Link>
                         </li>
                     ))}
                 </ul>
