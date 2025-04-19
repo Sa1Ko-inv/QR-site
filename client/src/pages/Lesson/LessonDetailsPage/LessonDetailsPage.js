@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchOneLesson, getAttendanceByLesson } from '@/http/lessonAPI';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {fetchOneLesson, getAttendanceByLesson, activateAttendance} from '@/http/lessonAPI';
 import * as styles from './LessonDetailsPage.module.scss';
 
 const LessonDetailsPage = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [lesson, setLesson] = useState(null);
     const [attendance, setAttendance] = useState([]);
+    const [attendanceCode, setAttendanceCode] = useState('');
     const [loading, setLoading] = useState(true);
+    const [activationMessage, setActivationMessage] = useState('');
 
     useEffect(() => {
         const getLessonDetails = async () => {
             try {
+                // Fetch lesson details
                 const lessonData = await fetchOneLesson(id);
                 setLesson(lessonData);
 
-
+                // Fetch attendance details for the lesson
                 const attendanceData = await getAttendanceByLesson(id);
                 setAttendance(attendanceData);
             } catch (error) {
@@ -28,6 +31,23 @@ const LessonDetailsPage = () => {
         getLessonDetails();
     }, [id]);
 
+    const handleActivateAttendance = async () => {
+        if (!attendanceCode) {
+            setActivationMessage('Введите код посещаемости.');
+            return;
+        }
+
+        try {
+            await activateAttendance(id, attendanceCode);
+            setActivationMessage('Посещаемость успешно активирована.');
+        } catch (error) {
+            console.error('Error activating attendance:', error);
+            setActivationMessage(
+                error.response?.data?.message || 'Ошибка активации посещаемости.'
+            );
+        }
+    };
+
     if (loading) {
         return <div className={styles.loading}>Загрузка...</div>;
     }
@@ -38,6 +58,7 @@ const LessonDetailsPage = () => {
 
     return (
         <div className={styles.container}>
+
             <h1 className={styles.title}>{lesson.title}</h1>
             <p className={styles.info}>Тип: {lesson.type}</p>
             <p className={styles.info}>
@@ -53,6 +74,20 @@ const LessonDetailsPage = () => {
             <p className={styles.groups}>
                 Группы: {lesson.groups?.map((group) => group.name).join(', ') || 'Не указаны'}
             </p>
+            <div className={styles.activationSection}>
+                <h2>Активировать посещаемость</h2>
+                <input
+                    type="text"
+                    placeholder="Введите код посещаемости"
+                    value={attendanceCode}
+                    onChange={(e) => setAttendanceCode(e.target.value)}
+                    className={styles.attendanceInput}
+                />
+                <button onClick={handleActivateAttendance} className={styles.activateButton}>
+                    Активировать
+                </button>
+                {activationMessage && <p className={styles.activationMessage}>{activationMessage}</p>}
+            </div>
             <h2 className={styles.attendanceTitle}>Список отметившихся пользователей:</h2>
             {attendance.length > 0 ? (
                 <ul className={styles.attendanceList}>
@@ -73,6 +108,7 @@ const LessonDetailsPage = () => {
             ) : (
                 <p className={styles.noAttendance}>Никто не отметился</p>
             )}
+
         </div>
     );
 };

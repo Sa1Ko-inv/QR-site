@@ -10,7 +10,7 @@ import Register from "@/pages/Register/Register";
 
 const AppRouter = () => {
     const { user } = useContext(Context);
-    console.log("Auth:", user.isAuth, "Role", user.role);
+    console.log("Auth:", user.isAuth, "Role", user.role, "User", user.user);
 
     if (user.isAuth && user.role === null) {
         return <div>Загрузка...</div>; // Здесь можно вставить спиннер
@@ -21,12 +21,13 @@ const AppRouter = () => {
             {user.isAuth && <Route path={HOME_ROUTE} element={<Home />} />}
 
             {/* Если авторизован, загружаем маршруты по роли */}
+            {/*Страницы для учителей*/}
             {user.isAuth && user.isTeacher() &&
                 teacherRoutes.map(({ path, element }) => (
                     <Route key={path} path={path} element={element} exact />
                 ))
             }
-
+            {/*Страницы для студентов*/}
             {user.isAuth && user.isStudent() &&
                 studentRoutes.map(({ path, element }) => (
                     <Route key={path} path={path} element={element} exact />
