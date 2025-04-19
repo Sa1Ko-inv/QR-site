@@ -42,7 +42,7 @@ const Attendance = sequelize.define('attendance', {
 
 // Связи между моделями
 Group.hasMany(User);
-User.belongsTo(Group);
+User.belongsTo(Group, { as: 'group' });
 
 // Связь многие-ко-многим между занятиями и группами
 Lesson.belongsToMany(Group, { through: LessonGroup });

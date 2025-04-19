@@ -1,58 +1,58 @@
-const { Attendance, Lesson, User } = require('../models/models');
+const { Attendance, Lesson, User, Group} = require('../models/models');
 const ApiError = require('../error/ApiError');
 
 class AttendanceController {
     // Студент отмечает посещение
     async markAttendance(req, res, next) {
+        const { lessonId, attendanceCode } = req.body;
+        const userId = req.user.id; // Предполагая, что идентификатор пользователя доступен из промежуточного программного обеспечения авторизации.
+
         try {
-            const { lessonId, attendanceCode } = req.body;
-            const studentId = req.user.id;
+            // Получить данные занятия
+            const lesson = await Lesson.findByPk(lessonId, {
+                include: [{ model: Group, as: 'groups' }] // Используем alias 'groups' для связи Lesson <-> Group
+            });
 
-            // Проверяем существование занятия
-            const lesson = await Lesson.findByPk(lessonId);
             if (!lesson) {
-                return next(ApiError.badRequest('Занятие не найдено'));
+                return res.status(404).json({ message: 'Занятие не найдено' });
             }
 
-            // Проверяем, активна ли отметка
-            if (!lesson.attendanceActive) {
-                return next(ApiError.badRequest('Отметка посещаемости не активна'));
-            }
-
-            // Проверяем, правильный ли код
+            // Проверить, совпадает ли код посещаемости
             if (lesson.attendanceCode !== attendanceCode) {
-                return next(ApiError.badRequest('Неверный код посещаемости'));
+                return res.status(400).json({ message: 'Неверный код посещения' });
             }
 
-            // Проверяем, не отмечался ли студент ранее
-            const existingAttendance = await Attendance.findOne({
-                where: { lessonId, userId: studentId }
+            // Получить группы, к которым принадлежит пользователь
+            const user = await User.findByPk(userId, {
+                include: [{ model: Group, as: 'group' }] // Используем alias 'group' для связи User <-> Group
             });
 
-            if (existingAttendance) {
-                return next(ApiError.badRequest('Вы уже отметили посещение'));
+            if (!user) {
+                return res.status(404).json({ message: 'Участник не найден' });
             }
 
-            // Записываем посещение
-            const attendance = await Attendance.create({
+            const userGroupIds = user.group ? [user.group.id] : []; // Убедиться, что group не null
+            const lessonGroupIds = lesson.groups.map((group) => group.id);
+
+            // Проверить, принадлежит ли пользователь к группе занятия
+            const isInGroup = lessonGroupIds.some((groupId) => userGroupIds.includes(groupId));
+
+            if (!isInGroup) {
+                return res.status(403).json({ message: 'Вы не являетесь частью какой-либо группы, связанной с этим уроком' });
+            }
+
+            // Отметить посещаемость
+            await Attendance.create({
                 lessonId,
-                userId: studentId,
+                userId,
                 present: true,
+                markedAt: new Date()
             });
 
-            // Таймер для автоматической деактивации через 5 минут (300000 мс)
-            setTimeout(async () => {
-                try {
-                    await attendance.update({ present: false });
-                    console.log(`Посещаемость для студента ${studentId} на занятии ${lessonId} деактивирована`);
-                } catch (err) {
-                    console.error('Ошибка при деактивации посещаемости:', err);
-                }
-            }, 300000);
-
-            return res.json({ message: 'Посещаемость отмечена', attendance });
+            return res.status(200).json({ message: 'Посещаемость отмечена успешно' });
         } catch (error) {
-            return next(ApiError.internal(error.message));
+            console.error('Ошибка при отметке посещаемости:', error);
+            return res.status(500).json({ message: 'Internal server error' });
         }
     }
     async getAttendanceForLesson(req, res, next) {
