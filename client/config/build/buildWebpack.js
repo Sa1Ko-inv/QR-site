@@ -14,6 +14,7 @@ const buildWebpack = (options) => {
         output: {
             path: paths.output,
             filename: '[name].[contenthash].js',
+            publicPath: '/', // Указывает корень для доступа к статическим файлам
             clean: true,
         },
         plugins: buildPlagins(options),

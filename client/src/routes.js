@@ -14,6 +14,7 @@ import Groups from "@/pages/Groups/Groups";
 import GroupInfo from "@/pages/Groups/GroupsInfo/GroupInfo";
 import LessonsPage from "@/pages/Lesson/LessonsPage";
 import LessonDetailsPage from "@/pages/Lesson/LessonDetailsPage/LessonDetailsPage";
+import AttendanceMarkPage from "@/pages/Attendance/AttendanceMarkPage";
 
 export const studentRoutes = [
     {
@@ -36,6 +37,10 @@ export const studentRoutes = [
     {
         path: `${GROUP_ROUTE}/:id`, // Добавляем параметр :id к маршруту
         element: <GroupInfo />
+    },
+    {
+        path: '/attendance/mark/:lessonId',
+        element: <AttendanceMarkPage /> // Страница для отметки посещаемости
     },
 ];
 
@@ -68,5 +73,9 @@ export const teacherRoutes = [
     {
         path: LESSONDETAILS_ROUTE,
         element: <LessonDetailsPage />
+    },
+    {
+        path: '/attendance/mark/:lessonId',
+        element: <AttendanceMarkPage /> // Страница для отметки посещаемости
     },
 ]; 

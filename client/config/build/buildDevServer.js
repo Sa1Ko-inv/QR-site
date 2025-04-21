@@ -7,8 +7,8 @@ const buildDevServer = (options) => {
     return {
         port: options.port,
         open: true,
-        historyApiFallback: true,
-        hot: true
+        historyApiFallback: true, // Включает поддержку SPA маршрутов
+        hot: true, // Горячая перезагрузка
     }
 }
 
