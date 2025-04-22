@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { studentRoutes, teacherRoutes } from "@/routes";
+import { studentRoutes, teacherRoutes } from "@/routes.jsx";
 import {GROUPS_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "@/utils/consts";
-import { Context } from "@/index";
-import Auth from "@/pages/Auth/Auth";
+import { Context } from "@/main.jsx";
+import Auth from "@/pages/Auth/Auth.jsx";
 import Groups from "@/pages/Groups/Groups";
-import Home from "@/pages/Home/Home";
-import Register from "@/pages/Register/Register";
+import Home from "@/pages/Home/Home.jsx";
+import Register from "@/pages/Register/Register.jsx";
 
 const AppRouter = () => {
     const { user } = useContext(Context);

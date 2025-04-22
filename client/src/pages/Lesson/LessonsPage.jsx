@@ -52,9 +52,6 @@ const LessonsPage = () => {
                             <Link to={`/lesson/${lesson.id}`}>
                                 Подробнее
                             </Link>
-                            <Link to={`/attendance/mark/${lesson.id}`}>
-                                Отметить посещаемость
-                            </Link>
                         </li>
                     ))}
                 </ul>

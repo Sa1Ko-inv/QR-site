@@ -2,11 +2,11 @@ import axios from "axios";
 
 // Не требует авторизации
 const $host = axios.create({
-baseURL: process.env.REACT_APP_API_URL,
+baseURL: import.meta.env.VITE_API_URL,
 })
 
 const $authHost = axios.create({
-baseURL: process.env.REACT_APP_API_URL,
+baseURL: import.meta.env.VITE_API_URL,
 
 })
 

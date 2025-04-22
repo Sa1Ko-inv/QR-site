@@ -1,7 +1,7 @@
 import { useState, useContext } from "react"
 import {Link, useNavigate} from "react-router-dom"
 import { observer } from "mobx-react-lite"
-import { Context } from "@/index"
+import { Context } from "@/main.jsx"
 import { REGISTRATION_ROUTE, HOME_ROUTE } from "@/utils/consts"
 import * as styles from "./Auth.module.scss"
 import {login} from "@/http/userAPI";

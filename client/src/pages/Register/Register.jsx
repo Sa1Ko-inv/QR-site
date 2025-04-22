@@ -3,7 +3,7 @@
 import {useState, useContext, useEffect} from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"
-import { Context } from "@/index"
+import { Context } from "@/main.jsx"
 import { LOGIN_ROUTE, HOME_ROUTE } from "@/utils/consts"
 import * as styles from "./Register.module.scss"
 import {registration} from "@/http/userAPI";

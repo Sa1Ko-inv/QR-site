@@ -7,14 +7,14 @@ import {
     LESSONDETAILS_ROUTE,
     LOGIN_ROUTE,
     REGISTRATION_ROUTE
-} from "@/utils/consts";
-import Register from "@/pages/Register/Register";
-import Auth from "@/pages/Auth/Auth";
-import Groups from "@/pages/Groups/Groups";
-import GroupInfo from "@/pages/Groups/GroupsInfo/GroupInfo";
-import LessonsPage from "@/pages/Lesson/LessonsPage";
-import LessonDetailsPage from "@/pages/Lesson/LessonDetailsPage/LessonDetailsPage";
-import AttendanceMarkPage from "@/pages/Attendance/AttendanceMarkPage";
+} from "@/utils/consts.js";
+import Register from "@/pages/Register/Register.jsx";
+import Auth from "./pages/Auth/Auth.jsx";
+import Groups from "@/pages/Groups/Groups.jsx";
+import GroupInfo from "@/pages/Groups/GroupsInfo/GroupInfo.jsx";
+import LessonsPage from "@/pages/Lesson/LessonsPage.jsx";
+import LessonDetailsPage from "@/pages/Lesson/LessonDetailsPage/LessonDetailsPage.jsx";
+import AttendanceMarkPage from "@/pages/Attendance/AttendanceMarkPage.jsx";
 
 export const studentRoutes = [
     {
@@ -78,4 +78,4 @@ export const teacherRoutes = [
         path: '/attendance/mark/:lessonId',
         element: <AttendanceMarkPage /> // Страница для отметки посещаемости
     },
-]; 
+];
