@@ -118,3 +118,27 @@
 .activationMessage.error {
   color: #dc3545; /* Error red */
 }
+
+.copyUrlSection {
+  margin-top: 20px;
+}
+
+.copyButton {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.copyButton:hover {
+  background-color: #45a049;
+}
+
+.copyMessage {
+  margin-top: 10px;
+  color: #4caf50;
+  font-size: 14px;
+}

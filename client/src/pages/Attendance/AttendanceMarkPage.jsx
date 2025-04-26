@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {$authHost, $host} from '@/http'; // Предполагается, что есть настроенный axios instance
+import {$authHost, $host} from '@/http';
+import {attendanceMark} from "@/http/attendanceAPI.js"; // Предполагается, что есть настроенный axios instance
 
 const AttendanceMarkPage = () => {
     const { lessonId } = useParams();
@@ -8,18 +9,29 @@ const AttendanceMarkPage = () => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await $authHost.post('/api/attendance/mark', {
+    //             lessonId,
+    //             attendanceCode,
+    //         });
+    //         setMessage(response.data.message || 'Посещаемость успешно отмечена!');
+    //         setSuccess(true);
+    //     } catch (error) {
+    //         setMessage(error.response?.data?.message || 'Ошибка при отметке посещаемости.');
+    //         setSuccess(false);
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await $authHost.post('/api/attendance/mark', {
-                lessonId,
-                attendanceCode,
-            });
+            const response = await attendanceMark(lessonId, attendanceCode);
             setMessage(response.data.message || 'Посещаемость успешно отмечена!');
             setSuccess(true);
         } catch (error) {
-            setMessage(error.response?.data?.message || 'Ошибка при отметке посещаемости.');
-            setSuccess(false);
+            console.error('Ошибка при посещаемости');
         }
     };
 

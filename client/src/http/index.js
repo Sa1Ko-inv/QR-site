@@ -1,12 +1,19 @@
 import axios from "axios";
 
+const getBaseUrl = () => {
+    const hostname = window.location.hostname;
+    console.log(hostname);
+    const port = '5000'; // Порт вашего приложения
+    return `http://${hostname}:${port}/`;
+}
+
 // Не требует авторизации
 const $host = axios.create({
-baseURL: import.meta.env.VITE_API_URL,
+baseURL: getBaseUrl(),
 })
 
 const $authHost = axios.create({
-baseURL: import.meta.env.VITE_API_URL,
+baseURL: getBaseUrl(),
 
 })
 

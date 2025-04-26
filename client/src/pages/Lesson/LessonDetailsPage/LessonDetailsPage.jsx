@@ -10,6 +10,7 @@ const LessonDetailsPage = () => {
     const [attendanceCode, setAttendanceCode] = useState('');
     const [loading, setLoading] = useState(true);
     const [activationMessage, setActivationMessage] = useState('');
+    const [copyMessage, setCopyMessage] = useState('');
 
     useEffect(() => {
         const getLessonDetails = async () => {
@@ -45,6 +46,54 @@ const LessonDetailsPage = () => {
             setActivationMessage(
                 error.response?.data?.message || 'Ошибка активации посещаемости.'
             );
+        }
+    };
+
+    const handleCopyUrl = () => {
+        const url = `${window.location.origin}/attendance/mark/${id}`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url)
+                .then(() => {
+                    setCopyMessage('URL успешно скопирован!');
+                    setTimeout(() => setCopyMessage(''), 3000);
+                })
+                .catch((error) => {
+                    console.error('Error copying URL:', error);
+                    setCopyMessage('Ошибка при копировании URL.');
+                });
+        } else {
+            // Старый способ копирования
+            const textArea = document.createElement('textarea');
+            textArea.value = url;
+            textArea.style.position = 'fixed';  // Избегаем скролла
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            textArea.style.padding = 0;
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            textArea.style.background = 'transparent';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    setCopyMessage('URL успешно скопирован!');
+                } else {
+                    setCopyMessage('Не удалось скопировать URL.');
+                }
+            } catch (err) {
+                console.error('Fallback: Ошибка копирования', err);
+                setCopyMessage('Ошибка при копировании URL.');
+            }
+
+            document.body.removeChild(textArea);
+            setTimeout(() => setCopyMessage(''), 3000);
         }
     };
 
@@ -88,6 +137,16 @@ const LessonDetailsPage = () => {
                 </button>
                 {activationMessage && <p className={styles.activationMessage}>{activationMessage}</p>}
             </div>
+
+            <div className={styles.copyUrlSection}>
+                <h2>Ссылка для отметки посещаемости</h2>
+
+                <button onClick={handleCopyUrl} className={styles.copyButton}>
+                    Копировать URL
+                </button>
+                {copyMessage && <p className={styles.copyMessage}>{copyMessage}</p>}
+            </div>
+
             <h2 className={styles.attendanceTitle}>Список отметившихся пользователей:</h2>
             {attendance.length > 0 ? (
                 <ul className={styles.attendanceList}>

@@ -9,7 +9,9 @@ const errorHandler = require('./middleware/ErrorHandlingMiddleware');
 const PORT = process.env.PORT || 7000;
 const app = express();
 // cors нужен чтобы наше приложение могло отправлять запросы на другой домен
-app.use(cors());
+app.use(cors(
+    {origin: '*',}
+));
 // Чтобы наше приложение могло парсить json
 app.use(express.json());
 

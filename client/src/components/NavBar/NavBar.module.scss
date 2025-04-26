@@ -66,6 +66,7 @@
 
       .btnClose {
         padding: 0.5rem 0.5rem;
+        font-size: 1.75rem;
         margin: -0.5rem -0.5rem -0.5rem auto;
         background-color: transparent;
         border: 0;
@@ -178,9 +179,6 @@
   }
 }
 
-.pe3 {
-  padding-right: 1rem !important;
-}
 
 .dInlineBlock {
   display: inline-block !important;
@@ -191,6 +189,7 @@
 }
 
 .offcanvasTitle {
+  font-size: 1rem;
   margin-bottom: 0;
   line-height: 1.5;
 }

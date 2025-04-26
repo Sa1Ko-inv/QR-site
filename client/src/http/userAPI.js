@@ -9,7 +9,7 @@ export const registration = async (email, password, fio, role, groupId) => {
 }
 
 export const login = async (email, password) => {
-    const {data} = await $host.post('"http://192.168.241.62:5000/api/user/login', {email, password});
+    const {data} = await $host.post('api/user/login', {email, password});
     localStorage.setItem('token', data.token)
     return jwtDecode(data.token);
 }
