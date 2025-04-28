@@ -1,4 +1,5 @@
 "use client"
+import React from 'react'; // Добавьте эту строку
 import { useContext, useState } from "react"
 import { Context } from "@/main.jsx"
 import {GROUPS_ROUTE, HOME_ROUTE, LESSON_ROUTE, LOGIN_ROUTE} from "@/utils/consts"

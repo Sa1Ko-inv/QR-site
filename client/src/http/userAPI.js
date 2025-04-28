@@ -18,7 +18,6 @@ export const check = async () => {
     const {data} = await $authHost.get('api/user/auth',);
     localStorage.setItem('token', data.token)
     const decoded = jwtDecode(data.token);
-    console.log(data);
     localStorage.setItem('role', decoded.role);
     return jwtDecode(data.token);
 }

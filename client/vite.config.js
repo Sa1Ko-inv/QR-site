@@ -4,7 +4,11 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({
+    // Решает проблемы с HMR и React Refresh
+    fastRefresh: true,
+    jsxRuntime: 'classic',
+  })],
   envDir: './',
   server: {
     host: '0.0.0.0', // Позволяет доступ с любых устройств в сети

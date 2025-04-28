@@ -1,3 +1,4 @@
+import React from 'react'; // Добавьте эту строку
 import Home from '@/pages/Home/Home';
 import {
     GROUP_ROUTE,

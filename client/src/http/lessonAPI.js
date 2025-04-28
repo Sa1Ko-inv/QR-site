@@ -29,6 +29,7 @@ export const fetchOneLesson = async (id) => {
 // Создание нового занятия
 export const createLesson = async (lesson) => {
     const { data } = await $authHost.post('api/lesson', lesson);
+    console.log('Переданные данные занятия',data);
     return data;
 };
 

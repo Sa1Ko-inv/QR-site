@@ -1,5 +1,6 @@
 "use client"
 
+import React from 'react'; // Добавьте эту строку
 import {useState, useContext, useEffect} from "react"
 import { useNavigate, Link } from "react-router-dom"
 import { observer } from "mobx-react-lite"

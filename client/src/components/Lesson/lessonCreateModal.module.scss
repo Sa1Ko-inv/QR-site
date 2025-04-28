@@ -1,0 +1,182 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  width: 480px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s;
+
+  h2 {
+    margin: 0 0 24px 0;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 16px 0 6px 0;
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+  }
+
+  small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #888;
+  }
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #f9f9f9;
+  transition: all 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: #8632e0;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(134, 50, 224, 0.12);
+  }
+
+  &::placeholder {
+    color: #aaa;
+  }
+}
+
+select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #f9f9f9;
+  transition: all 0.2s;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #8632e0;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(134, 50, 224, 0.12);
+  }
+}
+
+select[multiple] {
+  height: 120px;
+  padding: 8px;
+  overflow-y: auto;
+
+  option {
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 2px 0;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0e6ff;
+    }
+
+    &:checked {
+      background-color: #8632e0;
+      color: white;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  gap: 12px;
+
+  button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.2s;
+
+    &:first-child {
+      background: linear-gradient(90deg, #8632e0 0%, #5f4be3 100%);
+      color: #fff;
+
+      &:hover {
+        background: #7d30d0;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &:last-child {
+      background: #f0f0f0;
+      color: #555;
+
+      &:hover {
+        background: #e0e0e0;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили для InputMask */
+input[data-mask] {
+  font-family: monospace;
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .modal {
+    padding: 24px 16px;
+
+    .buttons {
+      flex-direction: column;
+    }
+  }
+}

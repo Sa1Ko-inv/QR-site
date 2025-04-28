@@ -9,21 +9,6 @@ const AttendanceMarkPage = () => {
     const [message, setMessage] = useState('');
     const [success, setSuccess] = useState(false);
 
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const response = await $authHost.post('/api/attendance/mark', {
-    //             lessonId,
-    //             attendanceCode,
-    //         });
-    //         setMessage(response.data.message || 'Посещаемость успешно отмечена!');
-    //         setSuccess(true);
-    //     } catch (error) {
-    //         setMessage(error.response?.data?.message || 'Ошибка при отметке посещаемости.');
-    //         setSuccess(false);
-    //     }
-    // };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

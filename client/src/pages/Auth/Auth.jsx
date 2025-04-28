@@ -1,3 +1,4 @@
+import React from 'react'; // Добавьте эту строку
 import { useState, useContext } from "react"
 import {Link, useNavigate} from "react-router-dom"
 import { observer } from "mobx-react-lite"

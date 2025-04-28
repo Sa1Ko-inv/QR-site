@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { fetchLessons } from '@/http/lessonAPI';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {fetchLessons} from '@/http/lessonAPI';
+import {Link} from 'react-router-dom';
 import * as styles from './LessonPage.module.scss';
+import MyModal from "@/components/UI/MyModal/MyModal.jsx";
+import LessonCreateModal from "@/components/Lesson/lessonCreateModal.jsx";
 
 const LessonsPage = () => {
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [createLesson, setCreateLesson] = useState(null);
 
     useEffect(() => {
         const getLessons = async () => {
@@ -26,9 +30,15 @@ const LessonsPage = () => {
         return <div className={styles.loading}>Загрузка...</div>;
     }
 
+    const createLessons = (newLesson) => {
+        setLessons([...lessons, newLesson]);
+        setCreateLesson(null);
+    }
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Список занятий</h1>
+            <button onClick={() => setIsCreateModalOpen(true)}>Создать занятие</button>
+
             {lessons.length > 0 ? (
                 <ul className={styles.lessonList}>
                     {lessons.map((lesson) => (
@@ -36,7 +46,7 @@ const LessonsPage = () => {
                             <h2 className={styles.lessonTitle}>{lesson.title}</h2>
                             <p className={styles.lessonInfo}>Тип: {lesson.type}</p>
                             <p className={styles.lessonInfo}>
-                                Дата: {new Date(lesson.date).toLocaleDateString()}
+                                Дата: {lesson.date}
                             </p>
                             <p className={styles.lessonInfo}>
                                 Время: {lesson.startTime} - {lesson.endTime}
@@ -57,6 +67,10 @@ const LessonsPage = () => {
                 </ul>
             ) : (
                 <p className={styles.noLessons}>Нет доступных занятий</p>
+            )}
+
+            {isCreateModalOpen && (
+                <LessonCreateModal onClose={() => setIsCreateModalOpen(false)} create={createLessons} />
             )}
         </div>
     );
