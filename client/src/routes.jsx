@@ -43,6 +43,10 @@ export const studentRoutes = [
         path: '/attendance/mark/:lessonId',
         element: <AttendanceMarkPage /> // Страница для отметки посещаемости
     },
+    {
+        path: LESSON_ROUTE,
+        element: <LessonsPage />
+    },
 ];
 
 export const teacherRoutes = [

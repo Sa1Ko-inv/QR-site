@@ -111,7 +111,7 @@ const LessonDetailsPage = () => {
             <h1 className={styles.title}>{lesson.title}</h1>
             <p className={styles.info}>Тип: {lesson.type}</p>
             <p className={styles.info}>
-                Дата: {new Date(lesson.date).toLocaleDateString()}
+                Дата: {lesson.date}
             </p>
             <p className={styles.info}>
                 Время: {lesson.startTime} - {lesson.endTime}

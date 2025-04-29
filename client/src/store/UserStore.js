@@ -1,5 +1,6 @@
 //Файл для хранения данных о пользователе
 import { makeAutoObservable } from "mobx";
+import {LOGIN_ROUTE} from "@/utils/consts.js";
 
 class UserStore {
     _isAuth = false;
@@ -44,8 +45,11 @@ class UserStore {
 
     logout() {
         this._isAuth = false;
-        this._user = null;
+        this._user = {};
         this._role = null;
+        localStorage.removeItem('token')
+        localStorage.removeItem('role')
+        navigate(LOGIN_ROUTE);
     }
 }
 

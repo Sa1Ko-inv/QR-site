@@ -1,15 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {fetchLessons} from '@/http/lessonAPI';
 import {Link} from 'react-router-dom';
 import * as styles from './LessonPage.module.scss';
 import MyModal from "@/components/UI/MyModal/MyModal.jsx";
 import LessonCreateModal from "@/components/Lesson/lessonCreateModal.jsx";
+import {Context} from "@/main.jsx";
 
 const LessonsPage = () => {
     const [lessons, setLessons] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [createLesson, setCreateLesson] = useState(null);
+    const {user} = useContext(Context);
 
     useEffect(() => {
         const getLessons = async () => {
@@ -37,7 +39,12 @@ const LessonsPage = () => {
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Список занятий</h1>
-            <button onClick={() => setIsCreateModalOpen(true)}>Создать занятие</button>
+            {user.isTeacher() && (
+                <>
+                    <button onClick={() => setIsCreateModalOpen(true)}>Создать занятие</button>
+                </>
+            )}
+
 
             {lessons.length > 0 ? (
                 <ul className={styles.lessonList}>
@@ -58,10 +65,14 @@ const LessonsPage = () => {
                             <p className={styles.lessonGroups}>
                                 Группы: {lesson.groups?.map((group) => group.name).join(', ') || 'Не указаны'}
                             </p>
-                            {/* Link to the detailed lesson page */}
-                            <Link to={`/lesson/${lesson.id}`}>
-                                Подробнее
-                            </Link>
+                            {user.isTeacher() && (
+                                <>
+                                    <Link to={`/lesson/${lesson.id}`}>
+                                        Подробнее
+                                    </Link>
+                                </>
+                            )}
+
                         </li>
                     ))}
                 </ul>

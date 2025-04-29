@@ -15,20 +15,11 @@ const NavBar = () => {
 
     const navigate = useNavigate();
 
-    const logOut = () => {
-        user.setUser({})
-        user.setIsAuth(false)
-        user.setRole(null);
-        localStorage.removeItem('token')
-        localStorage.removeItem('role')
-        navigate(LOGIN_ROUTE);
-    }
-
     return (
         <nav className={styles.navbar}>
             <div className={styles.navbarContainer}>
                 <div className={styles.navbarBrand} onClick={() => navigate(HOME_ROUTE)}>
-                    <img alt="" src="QR-icons.png" className={`${styles.dInlineBlock} ${styles.alignTop}`} />
+                    <img alt="" src="../../../public/QR-icons.png" className={`${styles.dInlineBlock} ${styles.alignTop}`} />
                 </div>
 
                 <button onClick={handleShow} className={styles.navbarToggler}>
@@ -70,7 +61,7 @@ const NavBar = () => {
                                 <button
                                     className={`${styles.btn} ${styles.btnOutlinePrimary} ${styles.w100}`}
                                     onClick={() => {
-                                        logOut();
+                                        user.logout();
                                         handleClose();
                                     }}
                                 >

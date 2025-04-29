@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import {Route, Routes, Navigate, useLocation} from "react-router-dom";
 import { studentRoutes, teacherRoutes } from "@/routes.jsx";
 import {GROUPS_ROUTE, HOME_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "@/utils/consts";
 import { Context } from "@/main.jsx";
@@ -10,6 +10,7 @@ import Register from "@/pages/Register/Register.jsx";
 
 const AppRouter = () => {
     const { user } = useContext(Context);
+    const location = useLocation();
     console.log("Auth:", user.isAuth, "Role", user.role, "User", user.user);
 
     if (user.isAuth && user.role === null) {
@@ -41,7 +42,11 @@ const AppRouter = () => {
             {/* Перенаправление в зависимости от авторизации */}
             <Route
                 path="*"
-                element={user.isAuth ? <Navigate to={HOME_ROUTE} replace /> : <Navigate to={LOGIN_ROUTE} replace />}
+                element={
+                    user.isAuth
+                        ? <Navigate to={HOME_ROUTE} replace />
+                        : <Navigate to={LOGIN_ROUTE} state={{ from: location }} replace />
+                }
             />
         </Routes>
     );

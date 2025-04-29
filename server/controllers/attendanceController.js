@@ -22,6 +22,18 @@ class AttendanceController {
                 return res.status(400).json({ message: 'Неверный код посещения' });
             }
 
+            // Проверить, не отметился ли студент уже
+            const existingAttendance = await Attendance.findOne({
+                where: {
+                    lessonId,
+                    userId
+                }
+            });
+
+            if (existingAttendance) {
+                return res.status(400).json({ message: 'Вы уже отметили посещение этого занятия' });
+            }
+
             // Получить группы, к которым принадлежит пользователь
             const user = await User.findByPk(userId, {
                 include: [{ model: Group, as: 'group' }] // Используем alias 'group' для связи User <-> Group

@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 7000;
 const app = express();
 // cors нужен чтобы наше приложение могло отправлять запросы на другой домен
 app.use(cors(
-    {origin: '*',}
+    {origin: true,}
 ));
 // Чтобы наше приложение могло парсить json
 app.use(express.json());

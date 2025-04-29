@@ -1,6 +1,6 @@
 import React from 'react'; // Добавьте эту строку
 import { useState, useContext } from "react"
-import {Link, useNavigate} from "react-router-dom"
+import {Link, useLocation, useNavigate} from "react-router-dom"
 import { observer } from "mobx-react-lite"
 import { Context } from "@/main.jsx"
 import { REGISTRATION_ROUTE, HOME_ROUTE } from "@/utils/consts"
@@ -10,9 +10,13 @@ import {login} from "@/http/userAPI";
 const Auth = observer(() => {
     const { user } = useContext(Context)
     const navigate = useNavigate();
+    const location = useLocation();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("");
+
+    // Получаем предыдущий маршрут из состояния location или используем главную страницу
+    const from = location.state?.from?.pathname || HOME_ROUTE;
 
     // Авторизация
     const signIn = async (e) => {
@@ -25,7 +29,8 @@ const Auth = observer(() => {
             user.setUser(user)
             user.setIsAuth(true)
             user.setRole(data.role)
-            navigate(HOME_ROUTE);
+            // Перенаправляем на предыдущую страницу или на главную
+            navigate(from, { replace: true });
         } catch (e) {
             const errorMessage = e.response?.data?.message || "Ошибка авторизации";
             setError(errorMessage);
