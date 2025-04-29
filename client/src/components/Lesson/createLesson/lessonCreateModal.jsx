@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import * as styles from './LessonCreateModal.module.scss';
+import * as styles from './lessonCreateModal.module.scss';
 import {Context} from "@/main.jsx";
 import {createLesson} from "@/http/lessonAPI.js";
 import {InputMask} from "@react-input/mask";
@@ -56,10 +56,6 @@ const LessonCreateModal = ({create, onClose}) => {
         };
         getGroups();
     }, []);
-
-    const PeredDan = () => {
-        console.log(newLesson);
-    }
 
     return (
         <div className={styles.modalOverlay}>

@@ -4,7 +4,7 @@ import { useContext, useState } from "react"
 import { Context } from "@/main.jsx"
 import {GROUPS_ROUTE, HOME_ROUTE, LESSON_ROUTE, LOGIN_ROUTE} from "@/utils/consts"
 import {useNavigate} from "react-router-dom"
-import styles from "./NavBar.module.scss"
+import * as styles from "./NavBar.module.scss"
 
 const NavBar = () => {
     const { user } = useContext(Context)
@@ -16,26 +16,26 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     return (
-        <nav className={styles.navbar}>
-            <div className={styles.navbarContainer}>
-                <div className={styles.navbarBrand} onClick={() => navigate(HOME_ROUTE)}>
-                    <img alt="" src="../../../public/QR-icons.png" className={`${styles.dInlineBlock} ${styles.alignTop}`} />
+        <nav className={styles.navBar_navbar}>
+            <div className={styles.navBar_navbarContainer}>
+                <div className={styles.navBar_navbarBrand} onClick={() => navigate(HOME_ROUTE)}>
+                    <img alt="" src="../../../public/QR-icons.png" className={`${styles.navBar_dInlineBlock} ${styles.navBar_alignTop}`} />
                 </div>
 
-                <button onClick={handleShow} className={styles.navbarToggler}>
+                <button onClick={handleShow} className={styles.navBar_navbarToggler}>
                     <span>☰</span>
                 </button>
 
-                <div className={`${styles.navbarOffcanvas} ${show ? styles.show : ''}`}>
-                    <div className={styles.navbarOffcanvasHeader}>
-                        <h5 className={styles.offcanvasTitle}>Меню</h5>
+                <div className={`${styles.navBar_navbarOffcanvas} ${show ? styles.show : ''}`}>
+                    <div className={styles.navBar_navbarOffcanvasHeader}>
+                        <h5 className={styles.navBar_offcanvasTitle}>Меню</h5>
                         <button type="button" className={styles.btnClose} onClick={handleClose}>×</button>
                     </div>
-                    <div className={styles.navbarOffcanvasBody}>
-                        <ul className={`${styles.nav} ${styles.justifyContentStart} ${styles.flexColumn} ${styles.pe3}`}>
-                            <li className={`${styles.navItem} ${styles.mb2} ${styles.mbLg0}`}>
+                    <div className={styles.navBar_navbarOffcanvasBody}>
+                        <ul className={`${styles.navBar_nav} ${styles.justifyContentStart} ${styles.flexColumn} ${styles.pe3}`}>
+                            <li className={`${styles.navBar_navItem} ${styles.navBar_mb2} ${styles.navBar_mbLg0}`}>
                                 <button
-                                    className={`${styles.btn} ${styles.btnPrimary} ${styles.w100}`}
+                                    className={`${styles.navBar_btn} ${styles.navBar_btnPrimary} ${styles.w100}`}
                                     onClick={() => {
                                         navigate(GROUPS_ROUTE);
                                         handleClose();
@@ -44,9 +44,9 @@ const NavBar = () => {
                                     Группы
                                 </button>
                             </li>
-                            <li className={`${styles.navItem} ${styles.mb2} ${styles.mbLg0}`}>
+                            <li className={`${styles.navBar_navItem} ${styles.navBar_mb2} ${styles.navBar_mbLg0}`}>
                                 <button
-                                    className={`${styles.btn} ${styles.btnPrimary} ${styles.w100}`}
+                                    className={`${styles.navBar_btn} ${styles.navBar_btnPrimary} ${styles.w100}`}
                                     onClick={() => {
                                         navigate(LESSON_ROUTE);
                                         handleClose();
@@ -56,10 +56,10 @@ const NavBar = () => {
                                 </button>
                             </li>
                         </ul>
-                        <ul className={`${styles.nav} ${styles.justifyContentEnd} ${styles.flexColumn}`}>
-                            <li className={`${styles.navItem} ${styles.mt2} ${styles.mtLg0}`}>
+                        <ul className={`${styles.navBar_nav} ${styles.justifyContentEnd} ${styles.flexColumn}`}>
+                            <li className={`${styles.navBar_navItem} ${styles.navBar_mt2} ${styles.navBar_mtLg0}`}>
                                 <button
-                                    className={`${styles.btn} ${styles.btnOutlinePrimary} ${styles.w100}`}
+                                    className={`${styles.navBar_btn} ${styles.navBar_btnOutlinePrimary} ${styles.w100}`}
                                     onClick={() => {
                                         user.logout();
                                         handleClose();

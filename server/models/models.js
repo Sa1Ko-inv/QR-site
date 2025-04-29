@@ -32,8 +32,32 @@ const Lesson = sequelize.define('lesson', {
             this.setDataValue('date', format(parsedDate, 'yyyy-MM-dd'));
         }
     }, // Дата проведения
-    startTime: {type: DataTypes.TIME, allowNull: false}, // Время начала
-    endTime: {type: DataTypes.TIME, allowNull: false}, // Время окончания
+    startTime: {
+        type: DataTypes.TIME, allowNull: false,
+        get() {
+            const rawValue = this.getDataValue('startTime');
+            return rawValue ? format(new Date(`1970-01-01 ${rawValue}`), 'HH:mm') : null;
+        },
+        set(value) {
+            // Принимаем строку в формате HH:mm и преобразуем в формат TIME
+            const [hours, minutes] = value.split(':');
+            const timeString = `${hours}:${minutes}:00`;
+            this.setDataValue('startTime', timeString);
+        }
+    }, // Время начала
+    endTime: {
+        type: DataTypes.TIME, allowNull: false,
+        get() {
+            const rawValue = this.getDataValue('endTime');
+            return rawValue ? format(new Date(`1970-01-01 ${rawValue}`), 'HH:mm') : null;
+        },
+        set(value) {
+            // Принимаем строку в формате HH:mm и преобразуем в формат TIME
+            const [hours, minutes] = value.split(':');
+            const timeString = `${hours}:${minutes}:00`;
+            this.setDataValue('endTime', timeString);
+        }
+    }, // Время окончания
     teacherId: {type: DataTypes.INTEGER, allowNull: false}, // ID преподавателя
     attendanceCode: {type: DataTypes.STRING, allowNull: true}, // Уникальный код для отметки посещаемости
     attendanceActive: {type: DataTypes.BOOLEAN, defaultValue: false} // Флаг активности отметки посещаемости

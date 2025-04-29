@@ -1,4 +1,4 @@
-.container {
+.lessonsPageContainer {
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
@@ -6,7 +6,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.title {
+.lessonsPageTitle {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,13 +15,13 @@
   color: #333;
 }
 
-.lessonList {
+.lessonsPageList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.lessonItem {
+.lessonsPageItem {
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -30,39 +30,39 @@
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.lessonItem:hover {
+.lessonsPageItem:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.lessonTitle {
+.lessonsPageItemTitle {
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
   color: #007bff;
   margin-bottom: 10px;
 }
 
-.lessonInfo {
+.lessonsPageItemInfo {
   font-size: 1rem;
   color: #555;
   margin: 5px 0;
 }
 
-.lessonGroups {
+.lessonsPageGroups {
   font-size: 1rem;
   color: #222;
   font-weight: bold;
 }
 
-.loading {
+.lessonsPageLoading {
   font-size: 1.5rem;
   text-align: center;
   color: #555;
 }
 
-.noLessons {
+.lessonsPageNoLessons {
   font-size: 1.2rem;
   text-align: center;
   color: #777;

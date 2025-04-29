@@ -1,5 +1,5 @@
 // NavBar.module.scss
-.navbar {
+.navBar_navbar {
   background-color: #f8f9fa;
   margin-bottom: 1rem;
 
@@ -82,7 +82,7 @@
   }
 }
 
-.nav {
+.navBar_nav {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -111,7 +111,7 @@
   }
 }
 
-.btn {
+.navBar_btn {
   display: inline-block;
   font-weight: 400;
   line-height: 1.5;
@@ -155,40 +155,40 @@
   }
 }
 
-.mb2 {
+.navBar_mb2 {
   margin-bottom: 0.5rem !important;
 }
 
-.mb3 {
+.navBar_mb3 {
   margin-bottom: 1rem !important;
 }
 
-.mbLg0 {
+.navBar_mbLg0 {
   @media (min-width: 992px) {
     margin-bottom: 0 !important;
   }
 }
 
-.mt2 {
+.navBar_mt2 {
   margin-top: 0.5rem !important;
 }
 
-.mtLg0 {
+.navBar_mtLg0 {
   @media (min-width: 992px) {
     margin-top: 0 !important;
   }
 }
 
 
-.dInlineBlock {
+.navBar_dInlineBlock {
   display: inline-block !important;
 }
 
-.alignTop {
+.navBar_alignTop {
   vertical-align: top !important;
 }
 
-.offcanvasTitle {
+.navBar_offcanvasTitle {
   font-size: 1rem;
   margin-bottom: 0;
   line-height: 1.5;
