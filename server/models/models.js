@@ -6,7 +6,10 @@ const User = sequelize.define('user', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     email: {type: DataTypes.STRING, unique: true,},
     password: {type: DataTypes.STRING,},
-    fio: {type: DataTypes.STRING,},
+    // fio: {type: DataTypes.STRING,},
+    firstName: {type: DataTypes.STRING,},
+    lastName: {type: DataTypes.STRING,},
+    middleName: {type: DataTypes.STRING,},
     role: {type: DataTypes.ENUM('STUDENT', 'TEACHER'), allowNull: false,},
     groupId: {type: DataTypes.INTEGER, allowNull: true}
 });

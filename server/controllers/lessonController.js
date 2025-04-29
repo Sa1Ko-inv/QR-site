@@ -55,7 +55,7 @@ class LessonController {
                     {
                         model: User,
                         as: 'teacher',
-                        attributes: ['id', 'fio', 'email'] // Выбираем только нужные атрибуты преподавателя
+                        attributes: ['id', 'firstName', 'lastName', 'middleName', 'email'] // Выбираем только нужные атрибуты преподавателя
                     }
                 ]
             });
@@ -89,7 +89,7 @@ class LessonController {
                     {
                         model: User,
                         as: 'teacher',
-                        attributes: ['id', 'fio', 'email']
+                        attributes: ['id', 'firstName', 'lastName', 'middleName', 'email']
                     }
                 ],
                 order: [['date', 'ASC'], ['startTime', 'ASC']]
@@ -118,7 +118,7 @@ class LessonController {
                         include: [
                             {
                                 model: User,
-                                attributes: ['id', 'fio', 'email'],
+                                attributes: ['id', 'firstName', 'lastName', 'middleName', 'email'],
                                 where: { role: 'STUDENT' }
                             }
                         ]
@@ -126,7 +126,7 @@ class LessonController {
                     {
                         model: User,
                         as: 'teacher',
-                        attributes: ['id', 'fio', 'email']
+                        attributes: ['id', 'firstName', 'lastName', 'middleName', 'email']
                     }
                 ]
             });
@@ -208,7 +208,7 @@ class LessonController {
                     {
                         model: User,
                         as: 'teacher',
-                        attributes: ['id', 'fio', 'email']
+                        attributes: ['id', 'firstName', 'lastName', 'middleName', 'email']
                     }
                 ]
             });

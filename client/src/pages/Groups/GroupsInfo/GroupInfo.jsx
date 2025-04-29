@@ -87,7 +87,7 @@ const GroupInfo = () => {
                     <ul className={styles.studentsList}>
                         {groupUsers.map(user => (
                             <li key={user.id} className={styles.studentItem}>
-                                <span className={styles.studentName}>{user.name}</span>
+                                <span className={styles.studentName}>{user.lastName} {user.firstName} {user.middleName}</span>
                             </li>
                         ))}
                     </ul>

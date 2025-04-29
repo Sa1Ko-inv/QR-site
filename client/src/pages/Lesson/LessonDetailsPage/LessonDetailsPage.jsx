@@ -18,6 +18,7 @@ const LessonDetailsPage = () => {
                 // Fetch lesson details
                 const lessonData = await fetchOneLesson(id);
                 setLesson(lessonData);
+                console.log('Fetched lesson data:', lessonData);
 
                 // Fetch attendance details for the lesson
                 const attendanceData = await getAttendanceByLesson(id);
@@ -117,7 +118,7 @@ const LessonDetailsPage = () => {
                 Время: {lesson.startTime} - {lesson.endTime}
             </p>
             <p className={styles.info}>
-                Преподаватель: {lesson.teacher?.fio || 'Не указано'} (
+                Преподаватель: {lesson.teacher.lastName} {lesson.teacher.firstName}  {lesson.teacher.middleName} (
                 {lesson.teacher?.email || 'Нет email'})
             </p>
             <p className={styles.groups}>
@@ -153,7 +154,7 @@ const LessonDetailsPage = () => {
                     {attendance.map((record) => (
                         <li key={record.id} className={styles.attendanceItem}>
                             <p className={styles.userName}>
-                                {record.user?.fio || 'Неизвестный пользователь'}
+                                {record.user?.lastName} {record.user?.firstName}  {record.user?.middleName}
                             </p>
                             <p className={styles.userEmail}>
                                 {record.user?.email || 'Нет email'}

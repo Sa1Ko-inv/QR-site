@@ -91,7 +91,7 @@ const LessonsPage = () => {
                                 Время: {lesson.startTime} - {lesson.endTime}
                             </p>
                             <p className={styles.lessonsPageItemInfo}>
-                                Преподаватель: {lesson.teacher?.fio || 'Не указано'} (
+                                Преподаватель: {lesson.teacher?.lastName} {lesson.teacher?.firstName} {lesson.teacher?.middleName} (
                                 {lesson.teacher?.email || 'Нет email'})
                             </p>
                             <p className={styles.lessonsPageGroups}>

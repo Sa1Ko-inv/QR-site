@@ -15,7 +15,9 @@ const Register = observer(() => {
     const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [fullName, setFullName] = useState("")
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [middleName, setMiddleName] = useState("")
     const [role, setRole] = useState("STUDENT")
     const [selectedGroup, setSelectedGroup] = useState("")  // Храним id выбранной группы
     const [groups, setGroups] = useState([]); // Храним список всех групп
@@ -42,7 +44,7 @@ const Register = observer(() => {
         e.preventDefault()
         let data
         try {
-            data = await registration(email, password, fullName, role, selectedGroup || null)
+            data = await registration(email, password, firstName, lastName, middleName, role, selectedGroup || null)
             setShowSuccessModal(true) // Показываем модальное окно при успешной регистрации
 
             // Перенаправляем на страницу авторизации через 3 секунды
@@ -94,9 +96,27 @@ const Register = observer(() => {
                 <input
                     className={styles.input}
                     type="text"
-                    placeholder="Введите ваше полное имя"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Введите ваше имя"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
+                />
+
+                <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="Введите ваше фамилию"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
+                />
+
+                <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="Введите ваше отчество"
+                    value={middleName}
+                    onChange={(e) => setMiddleName(e.target.value)}
                     required
                 />
 

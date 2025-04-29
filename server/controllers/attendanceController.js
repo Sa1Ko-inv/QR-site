@@ -80,7 +80,7 @@ class AttendanceController {
             // Получаем список отметившихся студентов
             const attendanceList = await Attendance.findAll({
                 where: { lessonId },
-                include: [{ model: User, attributes: ['id', 'fio', 'email'] }] // Подгружаем данные студентов
+                include: [{ model: User, attributes: ['id', 'firstName', 'lastName', 'middleName', 'email'] }] // Подгружаем данные студентов
             });
 
             return res.json(attendanceList);
