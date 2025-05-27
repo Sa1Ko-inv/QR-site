@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {$authHost, $host} from '@/http';
-import {attendanceMark} from "@/http/attendanceAPI.js"; // Предполагается, что есть настроенный axios instance
+import {attendanceMark} from "@/http/attendanceAPI.js";
+import * as styles from './AttendanceMarkPage.module.scss';
 
 const AttendanceMarkPage = () => {
     const { lessonId } = useParams();
@@ -16,26 +17,32 @@ const AttendanceMarkPage = () => {
             setMessage(response.data.message || 'Посещаемость успешно отмечена!');
             setSuccess(true);
         } catch (error) {
-            console.error('Ошибка при посещаемости');
+            setMessage(error.response?.data?.message || 'Ошибка при отметке посещаемости');
+            setSuccess(false);
         }
     };
 
     return (
-        <div>
-            <h1>Отметка посещаемости</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="attendanceCode">Код посещаемости:</label>
-                <input
-                    type="text"
-                    id="attendanceCode"
-                    value={attendanceCode}
-                    onChange={(e) => setAttendanceCode(e.target.value)}
-                    required
-                />
-                <button type="submit">Отметиться</button>
+        <div className={styles.container}>
+            <h1 className={styles.title}>Отметка посещаемости</h1>
+            <form className={styles.form} onSubmit={handleSubmit}>
+                <div className={styles.formGroup}>
+                    <label className={styles.label} htmlFor="attendanceCode">Код посещаемости:</label>
+                    <input
+                        className={styles.input}
+                        type="text"
+                        id="attendanceCode"
+                        value={attendanceCode}
+                        onChange={(e) => setAttendanceCode(e.target.value)}
+                        required
+                    />
+                </div>
+                <button className={styles.button} type="submit">Отметиться</button>
             </form>
             {message && (
-                <p style={{ color: success ? 'green' : 'red' }}>{message}</p>
+                <p className={`${styles.message} ${success ? styles.success : styles.error}`}>
+                    {message}
+                </p>
             )}
         </div>
     );

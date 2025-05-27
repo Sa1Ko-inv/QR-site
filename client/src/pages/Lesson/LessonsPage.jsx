@@ -13,13 +13,28 @@ const LessonsPage = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [createLesson, setCreateLesson] = useState(null);
     const [editingLesson, setEditingLesson] = useState(null);
+    const [selectedType, setSelectedType] = useState('Все');
+
     const {user} = useContext(Context);
+
+    const lessonTypes = ['Все', ...new Set(lessons.map(lesson => lesson.type))];
+
+    const filteredLessons = selectedType === 'Все'
+        ? lessons
+        : lessons.filter(lesson => lesson.type === selectedType);
+
+    const lessonTypeLabels = {
+        LABORATORY: 'Лабораторное занятие',
+        LECTURE: 'Лекция',
+        PRACTICE: 'Практика',
+        Все: 'Все', // для селектора
+    };
+
 
     useEffect(() => {
         const getLessons = async () => {
             try {
                 const data = await fetchLessons();
-                console.log(data);
                 setLessons(data);
             } catch (error) {
                 console.error('Error fetching lessons:', error);
@@ -38,25 +53,24 @@ const LessonsPage = () => {
     const createLessons = (newLesson) => {
         setLessons([...lessons, newLesson]);
         setCreateLesson(null);
-    }
+    };
 
     const handeDeleteLesson = async (id) => {
         try {
-            await deleteLesson(id)
-            setLessons(lessons.filter(lesson => lesson.id !== id))
-            alert('Занятие успешно удалено')
+            await deleteLesson(id);
+            setLessons(lessons.filter(lesson => lesson.id !== id));
+            alert('Занятие успешно удалено');
         } catch (error) {
             console.error('Ошибка при удалении занятия:', error);
         }
-    }
+    };
 
     const handleSaveLesson = async (updatedLesson) => {
         try {
             const response = await updateLesson(updatedLesson.id, {
                 ...updatedLesson,
-                groupIds: updatedLesson.groups || [], // groups уже содержит массив ID
+                groupIds: updatedLesson.groups || [],
             });
-            console.log('Ответ сервера:', response); // Проверьте структуру
 
             // Обновляем состояние
             setLessons(prev => prev.map(lesson =>
@@ -71,25 +85,43 @@ const LessonsPage = () => {
     return (
         <div className={styles.lessonsPageContainer}>
             <h1 className={styles.lessonsPageTitle}>Список занятий</h1>
+
             {user.isTeacher() && (
-                <>
-                    <button onClick={() => setIsCreateModalOpen(true)}>Создать занятие</button>
-                </>
+                <div className={styles.lessonsPageCreateBtnWrapper}>
+                    <button
+                        className={styles.lessonsPageCreateBtn}
+                        onClick={() => setIsCreateModalOpen(true)}
+                    >
+                        Создать занятие
+                    </button>
+                </div>
             )}
+
+            <div className={styles.lessonsPageFilterWrapper}>
+                <label htmlFor="lessonTypeFilter" className={styles.lessonsPageFilterLabel}>Фильтр по типу:</label>
+                <select
+                    id="lessonTypeFilter"
+                    className={styles.lessonsPageFilterSelect}
+                    value={selectedType}
+                    onChange={(e) => setSelectedType(e.target.value)}
+                >
+                    {lessonTypes.map(type => (
+                        <option key={type} value={type}>{lessonTypeLabels[type] || type}</option>
+                    ))}
+                </select>
+            </div>
 
 
             {lessons.length > 0 ? (
                 <ul className={styles.lessonsPageList}>
-                    {lessons.map((lesson) => (
+                    {filteredLessons.map((lesson) => (
                         <li key={lesson.id} className={styles.lessonsPageItem}>
                             <h2 className={styles.lessonsPageItemTitle}>{lesson.title}</h2>
-                            <p className={styles.lessonsPageItemInfo}>Тип: {lesson.type}</p>
                             <p className={styles.lessonsPageItemInfo}>
-                                Дата: {lesson.date}
+                                Тип: {lessonTypeLabels[lesson.type] || lesson.type}
                             </p>
-                            <p className={styles.lessonsPageItemInfo}>
-                                Время: {lesson.startTime} - {lesson.endTime}
-                            </p>
+                            <p className={styles.lessonsPageItemInfo}>Дата: {lesson.date}</p>
+                            <p className={styles.lessonsPageItemInfo}>Время: {lesson.startTime} - {lesson.endTime}</p>
                             <p className={styles.lessonsPageItemInfo}>
                                 Преподаватель: {lesson.teacher?.lastName} {lesson.teacher?.firstName} {lesson.teacher?.middleName} (
                                 {lesson.teacher?.email || 'Нет email'})
@@ -97,34 +129,30 @@ const LessonsPage = () => {
                             <p className={styles.lessonsPageGroups}>
                                 Группы: {lesson.groups?.map((group) => group.name).join(', ') || 'Не указаны'}
                             </p>
-                            <div className="lessonsPageBtnWrapper">
-                                {user.isTeacher() && (
-                                    <>
-                                        <Link to={`/lesson/${lesson.id}`}>
-                                            Подробнее
-                                        </Link>
-                                        <div className="lessonsPageActionBtns">
-                                            <button onClick={() => handeDeleteLesson(lesson.id)}>Удалить занятие
-                                            </button>
-                                            <button onClick={() => setEditingLesson(lesson)}>Редактировать занятие</button>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
+                            {user.isTeacher() && (
+                                <div className={styles.lessonsPageBtnWrapper}>
+                                    <Link to={`/lesson/${lesson.id}`} className={styles.lessonsPageLink}>
+                                        Подробнее
+                                    </Link>
+                                    <div className={styles.lessonsPageActionBtns}>
+                                        <button onClick={() => handeDeleteLesson(lesson.id)} className={styles.lessonsPageActionBtns_delete}>Удалить</button>
+                                        <button onClick={() => setEditingLesson(lesson)} className={styles.lessonsPageActionBtns_update}>Редактировать</button>
+                                    </div>
+                                </div>
+                            )}
                         </li>
                     ))}
                 </ul>
             ) : (
                 <p className={styles.lessonsPageNoLessons}>Нет доступных занятий</p>
             )}
-            {/*Модально окно создания занятия */}
+
             {isCreateModalOpen && (
-                <LessonCreateModal onClose={() => setIsCreateModalOpen(false)} create={createLessons}/>
+                <LessonCreateModal onClose={() => setIsCreateModalOpen(false)} create={createLessons} />
             )}
-            {/*Модальное окно редактирования занятия*/}
+
             {editingLesson && (
-                <LessonEditModal lesson={editingLesson} onClose={() => setEditingLesson(null)}
-                                 onSave={handleSaveLesson}/>
+                <LessonEditModal lesson={editingLesson} onClose={() => setEditingLesson(null)} onSave={handleSaveLesson} />
             )}
         </div>
     );

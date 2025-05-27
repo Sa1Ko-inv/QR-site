@@ -41,9 +41,14 @@ const Groups = () => {
     };
 
     const handleUpdate = async (groupId) => {
+        if (!newGroupName.trim()) {
+            alert('Название группы не может быть пустым');
+            return;
+        }
+
         try {
-            await updateGroup(groupId, newGroupName);
-            setGroups(groups.map(group => group.id === groupId ? {...group, name: newGroupName} : group));
+            await updateGroup(groupId, newGroupName.trim());
+            setGroups(groups.map(group => group.id === groupId ? {...group, name: newGroupName.trim()} : group));
             setEditingGroupId(null);
             setNewGroupName('');
         } catch (error) {
@@ -51,13 +56,19 @@ const Groups = () => {
         }
     };
 
+
     const handleGroupClick = (groupId) => {
         navigate(`${GROUP_ROUTE}/${groupId}`);
     };
 
     const handleCreate = async () => {
+        if (!newGroup.trim()) {
+            alert('Название группы не может быть пустым');
+            return;
+        }
+
         try {
-            const newGroupData = await createGroup(newGroup);
+            const newGroupData = await createGroup(newGroup.trim());
             setGroups([...groups, newGroupData]);
             setNewGroup('');
         } catch (error) {
@@ -96,11 +107,19 @@ const Groups = () => {
                             {user.isTeacher() && (
                                 <>
                                     {editingGroupId === group.id ? (
-                                        <button className={styles.saveButton} onClick={() => handleUpdate(group.id)}>Сохранить</button>
+                                        <>
+                                            <button className={styles.saveButton} onClick={() => handleUpdate(group.id)}>Сохранить</button>
+                                            <button className={styles.cancelButton} onClick={() => {
+                                                setEditingGroupId(null);
+                                                setNewGroupName('');
+                                            }}>Отменить</button>
+                                        </>
                                     ) : (
-                                        <button className={styles.editButton} onClick={() => handleEdit(group.id, group.name)}>Редактировать</button>
+                                        <>
+                                            <button className={styles.editButton} onClick={() => handleEdit(group.id, group.name)}>Редактировать</button>
+                                            <button className={styles.deleteButton} onClick={() => handleDelete(group.id)}>Удалить</button>
+                                        </>
                                     )}
-                                    <button className={styles.deleteButton} onClick={() => handleDelete(group.id)}>Удалить</button>
                                 </>
                             )}
                         </div>

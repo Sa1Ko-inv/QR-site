@@ -52,7 +52,7 @@ const NavBar = () => {
                                         handleClose();
                                     }}
                                 >
-                                    Лекции
+                                    Занятия
                                 </button>
                             </li>
                         </ul>

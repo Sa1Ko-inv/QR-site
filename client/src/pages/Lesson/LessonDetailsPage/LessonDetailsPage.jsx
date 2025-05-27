@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {fetchOneLesson, getAttendanceByLesson, activateAttendance} from '@/http/lessonAPI';
 import * as styles from './LessonDetailsPage.module.scss';
 
@@ -11,6 +12,7 @@ const LessonDetailsPage = () => {
     const [loading, setLoading] = useState(true);
     const [activationMessage, setActivationMessage] = useState('');
     const [copyMessage, setCopyMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getLessonDetails = async () => {
@@ -108,23 +110,22 @@ const LessonDetailsPage = () => {
 
     return (
         <div className={styles.container}>
-
+            <button onClick={() => navigate('/lesson')} className={styles.backButton}>
+                ← Назад к списку занятий
+            </button>
             <h1 className={styles.title}>{lesson.title}</h1>
             <p className={styles.info}>Тип: {lesson.type}</p>
+            <p className={styles.info}>Дата: {lesson.date}</p>
+            <p className={styles.info}>Время: {lesson.startTime} - {lesson.endTime}</p>
             <p className={styles.info}>
-                Дата: {lesson.date}
-            </p>
-            <p className={styles.info}>
-                Время: {lesson.startTime} - {lesson.endTime}
-            </p>
-            <p className={styles.info}>
-                Преподаватель: {lesson.teacher.lastName} {lesson.teacher.firstName}  {lesson.teacher.middleName} (
+                Преподаватель: {lesson.teacher.lastName} {lesson.teacher.firstName} {lesson.teacher.middleName} (
                 {lesson.teacher?.email || 'Нет email'})
             </p>
             <p className={styles.groups}>
                 Группы: {lesson.groups?.map((group) => group.name).join(', ') || 'Не указаны'}
             </p>
-            <div className={styles.activationSection}>
+
+            <div className={styles.section}>
                 <h2>Активировать посещаемость</h2>
                 <input
                     type="text"
@@ -136,12 +137,13 @@ const LessonDetailsPage = () => {
                 <button onClick={handleActivateAttendance} className={styles.activateButton}>
                     Активировать
                 </button>
-                {activationMessage && <p className={styles.activationMessage}>{activationMessage}</p>}
+                {activationMessage && (
+                    <p className={styles.activationMessage}>{activationMessage}</p>
+                )}
             </div>
 
-            <div className={styles.copyUrlSection}>
+            <div className={styles.section}>
                 <h2>Ссылка для отметки посещаемости</h2>
-
                 <button onClick={handleCopyUrl} className={styles.copyButton}>
                     Копировать URL
                 </button>
@@ -154,7 +156,7 @@ const LessonDetailsPage = () => {
                     {attendance.map((record) => (
                         <li key={record.id} className={styles.attendanceItem}>
                             <p className={styles.userName}>
-                                {record.user?.lastName} {record.user?.firstName}  {record.user?.middleName}
+                                {record.user?.lastName} {record.user?.firstName} {record.user?.middleName}
                             </p>
                             <p className={styles.userEmail}>
                                 {record.user?.email || 'Нет email'}
@@ -168,7 +170,6 @@ const LessonDetailsPage = () => {
             ) : (
                 <p className={styles.noAttendance}>Никто не отметился</p>
             )}
-
         </div>
     );
 };

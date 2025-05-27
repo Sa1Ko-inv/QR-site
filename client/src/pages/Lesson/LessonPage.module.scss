@@ -68,3 +68,154 @@
   color: #777;
   margin-top: 20px;
 }
+
+.lessonsPageCreateBtnWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.lessonsPageCreateBtn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.lessonsPageCreateBtn:hover {
+  background-color: #218838;
+}
+
+.lessonsPageBtnWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.lessonsPageActionBtns {
+  display: flex;
+  gap: 10px;
+}
+
+.lessonsPageActionBtns_delete {
+  padding: 12px 17px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+    font-size: 1rem;
+}
+
+.lessonsPageActionBtns_update {
+  padding: 12px 17px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc8935;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1rem;
+}
+
+.lessonsPageActionBtns_delete button:hover {
+  background-color: #c82333;
+}
+
+.lessonsPageLink {
+  display: inline-block;
+  padding: 12px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.lessonsPageLink:hover {
+  background-color: #0056b3;
+}
+@media (max-width: 768px) {
+  .lessonsPageContainer {
+    padding: 10px;
+  }
+
+  .lessonsPageTitle {
+    font-size: 1.5rem;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .lessonsPageItem {
+    padding: 10px;
+  }
+
+  .lessonsPageItemTitle {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .lessonsPageItemInfo,
+  .lessonsPageGroups {
+    font-size: 0.9rem;
+  }
+
+  .lessonsPageCreateBtnWrapper {
+    justify-content: center;
+  }
+
+  .lessonsPageCreateBtn {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+  }
+
+  .lessonsPageBtnWrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lessonsPageActionBtns {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lessonsPageActionBtns button,
+  .lessonsPageLink {
+    padding: 10px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .lessonsPageNoLessons,
+  .lessonsPageLoading {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
+
+.lessonsPageFilterWrapper {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lessonsPageFilterLabel {
+  font-weight: bold;
+}
+
+.lessonsPageFilterSelect {
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+

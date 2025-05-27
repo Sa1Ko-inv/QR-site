@@ -4,11 +4,11 @@ const lessonController = require('../controllers/lessonController');
 const checkRole = require('../middleware/checkRoleMiddleware');
 
 // Маршруты для занятий (только преподаватели могут создавать, обновлять и удалять)
-router.post('/', checkRole('TEACHER'), lessonController.create);
-router.get('/', lessonController.getAll);
-router.get('/:id', lessonController.getById);
-router.put('/:id', checkRole('TEACHER'), lessonController.update);
-router.delete('/:id', checkRole('TEACHER'), lessonController.delete);
+router.post('/', checkRole('TEACHER'), lessonController.create); // создание занятия
+router.get('/', lessonController.getAll); // Получение занятия
+router.get('/:id', lessonController.getById); // Получение определенного занятия
+router.put('/:id', checkRole('TEACHER'), lessonController.update); // Обновление занятия
+router.delete('/:id', checkRole('TEACHER'), lessonController.delete); //Удаление занятия
 
 router.post('/attendance/activate', checkRole('TEACHER'), lessonController.activateAttendance);
 router.post('/attendance/deactivate', checkRole('TEACHER'), lessonController.deactivateAttendance);
